@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mybestpractice">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".aop.OtherActivity"></activity>
+        <activity android:name=".customview.CircleViewActivity"></activity>
+        <activity android:name=".customview.SquareImgActivity" />
+        <activity android:name=".customview.CustomViewActivity" />
+        <activity android:name=".aop.AopDemoActivity" />
+        <activity android:name=".service.TestSertviceActivity" />
+
+        <service
+            android:name=".service.MyService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".aop.OtherActivity" />
         <activity android:name=".aop.LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
