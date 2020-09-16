@@ -12,6 +12,12 @@ import com.example.mybestpractice.aop.AopDemoActivity;
 import com.example.mybestpractice.customview.CustomViewActivity;
 import com.example.mybestpractice.service.TestSertviceActivity;
 
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -59,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });*/
+
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 5, 60, TimeUnit.SECONDS, new LinkedBlockingDeque<>(), new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                return null;
+            }
+        }, new RejectedExecutionHandler() {
+            @Override
+            public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+
+            }
+        });
 
 
     }

@@ -18,14 +18,16 @@ import butterknife.OnClick;
  */
 public class CustomViewActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_view);
         ButterKnife.bind(this);
+
     }
 
-    @OnClick({R.id.square_img, R.id.cirecle_view})
+    @OnClick({R.id.square_img, R.id.cirecle_view, R.id.flowlayout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.square_img:
@@ -33,6 +35,9 @@ public class CustomViewActivity extends AppCompatActivity {
                 break;
             case R.id.cirecle_view:
                 startActivity(new Intent(this, CircleViewActivity.class));
+                break;
+            case R.id.flowlayout:
+                startActivity(new Intent(this, FlowlayoutActivity.class));
                 break;
         }
     }
