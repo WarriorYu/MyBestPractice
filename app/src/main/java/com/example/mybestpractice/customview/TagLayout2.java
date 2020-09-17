@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SizeUtils;
 
 import java.util.ArrayList;
@@ -15,28 +14,55 @@ import java.util.List;
 /**
  * @author :   yuxibing
  * @date :   2020-09-16
- * Describe :
+ * Describe : 标签布局，可通过addView()后者xml添加子View。如果宽度不够，会自动换行。
  */
-public class TagLayout extends ViewGroup {
-    private static final int HORIZONTAL_SPACE = SizeUtils.dp2px(15f);
-    private static final int VERTICAL_SPACE = SizeUtils.dp2px(10f);
+public class TagLayout2 extends ViewGroup {
+
+
     // 保存child测量后的位置
     private List<Rect> childBounds = new ArrayList<>();
 
-    public TagLayout(Context context) {
+    // 默认的水平和垂直间距
+    private static final int HORIZONTAL_SPACE = SizeUtils.dp2px(6f);
+    private static final int VERTICAL_SPACE = SizeUtils.dp2px(8f);
+
+    // 设置默认的水平和垂直间距
+    private int mHorizontalSpace = HORIZONTAL_SPACE;
+    private int mVerticalSpace = VERTICAL_SPACE;
+
+    /**
+     * 可定义水平间距
+     *
+     * @param horizontalSpace
+     */
+    public void setHorizontalSpace(int horizontalSpace) {
+        this.mHorizontalSpace = horizontalSpace;
+    }
+
+    /**
+     * 可定义垂直间距
+     *
+     * @param verticalSpace
+     */
+    public void setVerticalSpace(int verticalSpace) {
+        this.mVerticalSpace = verticalSpace;
+    }
+
+
+    public TagLayout2(Context context) {
         this(context, null);
     }
 
-    public TagLayout(Context context, AttributeSet attrs) {
+    public TagLayout2(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
 
-    public TagLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TagLayout2(Context context, AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
 
-    public TagLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TagLayout2(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -47,10 +73,10 @@ public class TagLayout extends ViewGroup {
         // 宽度已经用了多少
         int widthUsed = 0;
         // 高度已经用了多少,默认加个顶部的边距
-        int heightUsed = VERTICAL_SPACE;
+        int heightUsed = 0;
 
         // 当前行的宽度已经用了多少,默认加个左边距
-        int lineWidthUsed = HORIZONTAL_SPACE;
+        int lineWidthUsed = 0;
         // 当前行所有child的最大高度
         int lineMaxHeight = 0;
 
@@ -61,16 +87,21 @@ public class TagLayout extends ViewGroup {
             // 对child测量
             // 需要重写 generateLayoutParams() 并返回 MarginLayoutParams 才能使  measureChildWithMargins()方法
             measureChildWithMargins(child, widthMeasureSpec, lineWidthUsed, heightMeasureSpec, heightUsed);
-            if (lineWidthUsed + child.getMeasuredWidth() + HORIZONTAL_SPACE > specWidthSize && specWidMode != MeasureSpec.UNSPECIFIED) {
+            if (lineWidthUsed + child.getMeasuredWidth() + mHorizontalSpace > specWidthSize && specWidMode != MeasureSpec.UNSPECIFIED) {
                 // 如果加上这个child的宽度后，一行放不开，则换行,并且把本行的高度加到总高度里
                 heightUsed += lineMaxHeight;
-                heightUsed += VERTICAL_SPACE;
+                heightUsed += mVerticalSpace;
 
                 // 换行后，本行宽度初始化为0,如果需要左边距，则为HORIZONTAL_PADDING
-                lineWidthUsed = HORIZONTAL_SPACE;
+                lineWidthUsed = 0;
                 lineMaxHeight = 0;
                 // 根据更新的已使用宽度和高度再次测量child
                 measureChildWithMargins(child, widthMeasureSpec, lineWidthUsed, heightMeasureSpec, heightUsed);
+            } else {
+                // 如果不是每行的第一个tag，则加个左边距
+                if (i != 0) {
+                    lineWidthUsed += mHorizontalSpace;
+                }
             }
 
             Rect childBound;
@@ -82,10 +113,10 @@ public class TagLayout extends ViewGroup {
             }
 
             childBound.set(lineWidthUsed, heightUsed, lineWidthUsed + child.getMeasuredWidth(), heightUsed + child.getMeasuredHeight());
+
             childBounds.add(childBound);
             // 更新本行使用的宽度
             lineWidthUsed += child.getMeasuredWidth();
-            lineWidthUsed += HORIZONTAL_SPACE;
             // 更新使用的最大宽度
             widthUsed = Math.max(widthUsed, lineWidthUsed);
             // 更新本行的最大高度
@@ -93,7 +124,6 @@ public class TagLayout extends ViewGroup {
         }
         // 最后将最后一行的高度加上
         heightUsed += lineMaxHeight;
-        heightUsed += VERTICAL_SPACE;
         setMeasuredDimension(widthUsed, heightUsed);
     }
 
