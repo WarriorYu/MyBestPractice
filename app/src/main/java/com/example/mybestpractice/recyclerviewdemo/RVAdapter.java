@@ -1,4 +1,4 @@
-package com.example.mybestpractice.aop.recyclerviewdemo;
+package com.example.mybestpractice.recyclerviewdemo;
 
 import android.view.View;
 import android.view.ViewGroup;

@@ -22,4 +22,19 @@
         android:layout_height="wrap_content"
         android:onClick="service"
         android:text="Custom View Demo" />
+
+    <Button
+        android:id="@+id/kotlin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="service"
+        android:text="Kotlin Demo" />
+
+
+    <Button
+        android:id="@+id/optimize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="service"
+        android:text="Optimize Demo" />
 </LinearLayout>

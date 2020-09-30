@@ -118,6 +118,11 @@ public class TagLayout extends ViewGroup {
         return new MarginLayoutParams(getContext(), attrs);
     }
 
+    @Override
+    protected LayoutParams generateLayoutParams(LayoutParams p) {
+        return new MarginLayoutParams(p);
+    }
+
     /**
      * 重写以支持 measureChildWithMargins 方法
      * 必须重写此方法，否则通过addView()方式添加子View的时候报错
