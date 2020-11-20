@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.example.mybestpractice.aop.AopDemoActivity;
 import com.example.mybestpractice.customview.CustomViewActivity;
 import com.example.mybestpractice.kotlin.Main2Activity;
@@ -36,8 +38,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import kotlinx.coroutines.GlobalScope;
-import leakcanary.LeakCanary;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -61,11 +61,24 @@ public class MainActivity extends AppCompatActivity {
 //        super.onRestoreInstanceState(savedInstanceState);
 //    }
 
+    private  Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+        }
+    };
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         LaunchTimer.endRecord("onWindowFocusChanged");
+        Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
+            @Override
+            public void doFrame(long frameTimeNanos) {
+
+            }
+        });
     }
 
     @Override
@@ -91,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       /* OkHttpClient client = new OkHttpClient.Builder().readTimeout(10, TimeUnit.SECONDS).build();
+        OkHttpClient client = new OkHttpClient.Builder().readTimeout(10, TimeUnit.SECONDS).build();
         Request request = new Request.Builder().get().url("http://www.baidu.com").build();
         okhttp3.Call call = client.newCall(request);
 
@@ -112,9 +125,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                LogUtils.e(response.toString());
 
             }
-        });*/
+        });
 
 
     }

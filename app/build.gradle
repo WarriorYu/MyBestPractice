@@ -1,6 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'me.ele.lancet'
+apply plugin: 'com.didichuxing.tools.droidassist'
+apply from: this.rootProject.file('releaseinfo.gradle')
+
+droidAssistOptions {
+    config file("droidassist.xml") //插件配置文件(必选配置,支持多配置文件)
+    // 如果需要停用 DroidAssist 插件功能，可以添加 enable false 以停用插件 (可选配置)
+    enable true
+    // 日志输出等级：0 关闭日志输出，1 输出日志到控制台 2 输出日志到文件 3 输出日志到控制台以及日志 (可选配置)
+    logLevel 1
+    // 日志输出目录，当日志输出到文件时，默认的输出目录是当前 model 的 build/outputs/logs 目录 (可选配置)
+    // logDir
+}
 
 buildscript { // 编译时用Aspect专门的编译器，不再使用传统的javac
     repositories {
@@ -18,7 +31,7 @@ android {
     defaultConfig {
         applicationId "com.example.mybestpractice"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -72,6 +85,16 @@ dependencies {
     implementation "androidx.core:core-ktx:1.3.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    implementation 'me.weishu:epic:0.6.0'
+
+    // 异步加载布局以避免界面出现卡顿。
+    implementation "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
+
+    // 异步启动器
+    implementation project(path: ':launchstarter')
+
+//    compileOnly 'me.ele:lancet-base:1.0.6'
+
 }
 
 
@@ -121,3 +144,153 @@ variants.all { variant ->
         }
     }
 }
+
+// 创建Task的两种方式
+
+//方式一: 直接通过task函数去创建
+/*task hellowTask1(group: 'yxbTask', description: 'task study') {
+    println 'I am hellowTask1'
+}*/
+
+//方式二:通过TaskContainer去创建Task
+/*this.tasks.create(name: 'hellowTask2') {
+    setGroup('yxbTask')
+    setDescription('task study')
+    println 'I am hellowTask2'
+}*/
+
+task hellowTask(group: 'yxbTask', description: 'task study') {
+    println 'I am hellowTask'
+    // doFirst 在已有的默认Task之前执行，doLast在之后执行
+    doFirst {
+        println 'the task group is:' + group
+    }
+    //可以使用多个doFirst
+    doFirst {}
+}
+
+hellowTask.doFirst {
+    println 'the task description is:' + description
+}
+
+// 计算build执行时长
+def startBuildTime, endBuildTime
+
+// afterEvaluate 方法保证要找的Task已经配置完毕
+this.afterEvaluate { Project project ->
+    def preBuildTask = project.tasks.getByName('preBuild')
+    preBuildTask.doFirst {
+        startBuildTime = System.currentTimeMillis()
+        println 'the start time is:' + startBuildTime
+    }
+
+    def endBuildTask = project.tasks.getByName('build')
+    endBuildTask.doLast {
+        endBuildTime = System.currentTimeMillis()
+        println "the build time is ${endBuildTime - startBuildTime}"
+    }
+}
+
+task taskX {
+    doLast {
+        println 'taskX'
+    }
+}
+task taskY {
+    doLast {
+        println 'taskY'
+    }
+}
+// taskZ 依赖taskX, taskY
+task taskZ(dependsOn: [taskX, taskY]) {
+    doLast {
+        println 'taskZ'
+    }
+}
+
+// 让taskW依赖筛选出来的以'lib'开头的task。
+task lib1 {
+    doLast {
+        println 'lib1'
+    }
+}
+
+task lib2 {
+    doLast {
+        println 'lib2'
+    }
+}
+
+task lib3 {
+    doLast {
+        println 'lib3'
+    }
+}
+
+task taskW {
+    dependsOn this.tasks.findAll { task ->
+        return task.name.startsWith('lib')
+    }
+    doLast {
+        println 'taskW'
+    }
+}
+
+// 将releases.xml文件中的发版信息，写到build/generated/release/目录里
+/*task handleReleaseFile {
+
+    def srcFile = file('releases.xml')
+    def destDir = new File(this.buildDir, 'generated/release/')
+    doLast {
+        println '开始解析对应的xml文件'
+        destDir.mkdir()
+        def releases = new XmlParser().parse(srcFile)
+        releases.release.each { releaseNode ->
+            def versionCode = releaseNode.versionCode.text()
+            def versionName = releaseNode.versionName.text()
+            def versionInfo = releaseNode.versionInfo.text()
+            //创建文件并写入节点数据
+            def destFile = new File(destDir, "release-${versionName}.text")
+            destFile.withWriter { writer ->
+                writer.write("${versionName} -> ${versionCode} -> ${versionInfo}")
+
+            }
+        }
+
+    }
+}*/
+
+//测试以上handleReleaseFile Task
+/*task handleReleaseFileTest(dependsOn: handleReleaseFile) {
+    doLast {
+        println '输出完成'
+    }
+}*/
+
+
+task taskA {
+    doLast {
+        println 'taskA'
+    }
+}
+task taskB {
+    mustRunAfter taskA
+    doLast {
+        println 'taskB'
+    }
+}
+//执行顺序： taskA taskB, taskC
+task taskC {
+    mustRunAfter taskB
+    doLast {
+        println 'taskC'
+    }
+}
+
+
+
+
+
+
+
+

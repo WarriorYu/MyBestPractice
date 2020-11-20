@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".optimize.OptimizeActivity"></activity>
+        <activity android:name=".optimize.ImageHookActivity"></activity>
+        <activity android:name=".optimize.OptimizeActivity" />
         <activity android:name=".kotlin.Main2Activity" />
         <activity android:name=".customview.FlowlayoutActivity" />
         <activity android:name=".customview.CircleViewActivity" />

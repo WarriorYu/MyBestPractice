@@ -11,12 +11,13 @@ import java.util.List;
  * Describe :
  */
 public class CallBackManager{
+    //静态的生命周期和应用生命周期一样，所以会导致OptimizeActivity内存泄漏
     public static List<ICallBack> sCallBacks = new ArrayList<>();
     public static void addCallBack(ICallBack callBack) {
         sCallBacks.add(callBack);
     }
 
-    public void removeCallBack(ICallBack callBack) {
+    public static void removeCallBack(ICallBack callBack) {
         sCallBacks.remove(callBack);
     }
 }
