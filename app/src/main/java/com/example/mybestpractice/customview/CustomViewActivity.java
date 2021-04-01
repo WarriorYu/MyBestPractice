@@ -27,7 +27,7 @@ public class CustomViewActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.square_img, R.id.cirecle_view, R.id.flowlayout})
+    @OnClick({R.id.square_img, R.id.cirecle_view, R.id.flowlayout,R.id.scroller})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.square_img:
@@ -38,6 +38,9 @@ public class CustomViewActivity extends AppCompatActivity {
                 break;
             case R.id.flowlayout:
                 startActivity(new Intent(this, FlowlayoutActivity.class));
+                break;
+            case R.id.scroller:
+                startActivity(new Intent(this, ScrollerActivity.class));
                 break;
         }
     }

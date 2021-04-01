@@ -1,46 +1,34 @@
 package com.example.mybestpractice.optimize;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
-import androidx.core.view.LayoutInflaterCompat;
-
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.os.Process;
-import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.util.Printer;
 import android.view.Choreographer;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.util.LogUtils;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.blankj.utilcode.util.ThreadUtils;
 import com.example.mybestpractice.R;
 import com.example.mybestpractice.optimize.async.ThreadPoolUtil;
 
-import java.util.concurrent.ThreadPoolExecutor;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OptimizeActivity extends AppCompatActivity implements ICallBack {
     @BindView(R.id.img)
     ImageView img;
     @BindView(R.id.test_imghook)
     ImageView testImgHook;
+    @BindView(R.id.btn_thread)
+    Button btnThread;
+
+    private static final String TAG = OptimizeActivity.class.getSimpleName();
 
    /* private static Handler handler = new Handler() {
         @Override
@@ -150,21 +138,6 @@ public class OptimizeActivity extends AppCompatActivity implements ICallBack {
             LogUtils.e("主线程获取了锁");
         }*/
 
-        ThreadPoolUtil.getService().execute(new Runnable() {
-            @Override
-            public void run() {
-                // 在线程运行时可以修改线程的优先级
-                Process.setThreadPriority(Process.THREAD_PRIORITY_DEFAULT);
-                String oldName = Thread.currentThread().getName();
-                //在线程运行时，可以修改线程名字，方便当前使用线程的用户调试
-                Thread.currentThread().setName("newName");
-
-                // ... 执行业务代码
-
-                // 执行完后再修改回原来的线程名字
-                Thread.currentThread().setName(oldName);
-            }
-        });
     }
 
     @Override
@@ -182,6 +155,27 @@ public class OptimizeActivity extends AppCompatActivity implements ICallBack {
         super.onDestroy();
         // 及时的注销callBack，防止内存泄漏
         CallBackManager.removeCallBack(this);
+    }
+
+    @OnClick(R.id.btn_thread)
+    public void onViewClicked() {
+        ThreadPoolUtil.getService().execute(new Runnable() {
+            @Override
+            public void run() {
+                // 在线程运行时可以修改线程的优先级
+                Process.setThreadPriority(Process.THREAD_PRIORITY_DEFAULT);
+                String oldName = Thread.currentThread().getName();
+                Log.e(TAG, oldName);
+                //在线程运行时，可以修改线程名字，方便当前使用线程的用户调试
+                Thread.currentThread().setName("newName");
+                String newName = Thread.currentThread().getName();
+                Log.e(TAG, newName);
+                // ... 执行业务代码
+
+                // 执行完后再修改回原来的线程名字
+                Thread.currentThread().setName(oldName);
+            }
+        });
     }
 
 

@@ -14,14 +14,19 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.example.mybestpractice.aop.AopDemoActivity;
 import com.example.mybestpractice.customview.CustomViewActivity;
+import com.example.mybestpractice.kotlin.BaseApplication;
 import com.example.mybestpractice.kotlin.Main2Activity;
+import com.example.mybestpractice.kotlin.Utils;
+import com.example.mybestpractice.mvvm.MVVMActivity;
 import com.example.mybestpractice.optimize.OptimizeActivity;
 import com.example.mybestpractice.service.TestSertviceActivity;
 import com.example.mybestpractice.util.LaunchTimer;
@@ -29,6 +34,14 @@ import com.example.mybestpractice.util.LaunchTimer;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Stack;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadFactory;
@@ -61,11 +74,12 @@ public class MainActivity extends AppCompatActivity {
 //        super.onRestoreInstanceState(savedInstanceState);
 //    }
 
-    private  Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
         }
+
     };
 
 
@@ -79,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     @Override
@@ -103,18 +118,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-        OkHttpClient client = new OkHttpClient.Builder().readTimeout(10, TimeUnit.SECONDS).build();
+       /* OkHttpClient client = new OkHttpClient.Builder().readTimeout(10, TimeUnit.SECONDS).build();
         Request request = new Request.Builder().get().url("http://www.baidu.com").build();
         okhttp3.Call call = client.newCall(request);
 
 
         // 方式一：同步请求
-//        try {
-//            Response response = call.execute();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Response response = call.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // 方式二：异步请求
         call.enqueue(new Callback() {
@@ -128,7 +142,12 @@ public class MainActivity extends AppCompatActivity {
                 LogUtils.e(response.toString());
 
             }
-        });
+        });*/
+
+//        BaseApplication.currentApplication();
+
+        Utils.INSTANCE.toast("单参数");
+        Utils.INSTANCE.toast("双参数", Toast.LENGTH_LONG);
 
 
     }
@@ -141,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     public void service(View view) {
     }
 
-    @OnClick({R.id.aop, R.id.service, R.id.custom_view, R.id.kotlin, R.id.optimize})
+    @OnClick({R.id.aop, R.id.service, R.id.custom_view, R.id.kotlin, R.id.optimize, R.id.mvvm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aop:
@@ -159,7 +178,16 @@ public class MainActivity extends AppCompatActivity {
             case R.id.optimize:
                 startActivity(new Intent(this, OptimizeActivity.class));
                 break;
+            case R.id.mvvm:
+                startActivity(new Intent(this, MVVMActivity.class));
+                break;
             default:
         }
+    }
+
+    @Nullable
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return super.onRetainCustomNonConfigurationInstance();
     }
 }

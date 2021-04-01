@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author :   yuxibing
  * @date :   2020-09-16
- * Describe : 标签布局，可通过addView()后者xml添加子View。如果宽度不够，会自动换行。
+ * Describe : 标签布局，可通过addView()或者xml添加子View。如果宽度不够，会自动换行。
  */
 public class TagLayout2 extends ViewGroup {
 

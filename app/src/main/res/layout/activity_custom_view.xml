@@ -25,4 +25,10 @@
         android:layout_height="wrap_content"
         android:text="flowlayout" />
 
+    <Button
+        android:id="@+id/scroller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="通过Scroller实现滑动效果" />
+
 </LinearLayout>
