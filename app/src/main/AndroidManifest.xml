@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".customview.ScrollerActivity"></activity>
+        <activity android:name=".kotlin.rxjava3.Rxjava3Activity"></activity>
+        <activity android:name=".customview.ScrollerActivity" />
         <activity android:name=".mvvm.MVVMActivity" />
         <activity android:name=".optimize.ImageHookActivity" />
         <activity android:name=".optimize.OptimizeActivity" />

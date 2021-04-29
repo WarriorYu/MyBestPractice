@@ -44,4 +44,10 @@
         android:layout_height="wrap_content"
         android:onClick="service"
         android:text="MVVM Demo" />
+
+    <Button
+        android:id="@+id/Rxjava3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rxjava3源码解析" />
 </LinearLayout>

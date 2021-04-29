@@ -20,6 +20,8 @@ import com.example.mybestpractice.util.LaunchTimer;
 import com.taobao.android.dexposed.DexposedBridge;
 import com.taobao.android.dexposed.XC_MethodHook;
 
+import leakcanary.LeakCanary;
+
 /**
  * @author :   yuxibing
  * @date :   2020-09-16

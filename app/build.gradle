@@ -88,6 +88,8 @@ dependencies {
 
     // okhttp3
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -126,6 +128,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // Rxjava3
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
 
 }
 

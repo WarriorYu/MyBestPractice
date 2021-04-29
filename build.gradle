@@ -20,7 +20,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:4.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         //DroidAssist 是一个轻量级的 Android 字节码编辑插件，基于 Javassist 对字节码操作
         classpath "com.didichuxing.tools:droidassist:1.1.1"

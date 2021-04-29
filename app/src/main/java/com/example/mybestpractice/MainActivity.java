@@ -1,10 +1,9 @@
 package com.example.mybestpractice;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
@@ -13,49 +12,30 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.example.mybestpractice.aop.AopDemoActivity;
 import com.example.mybestpractice.customview.CustomViewActivity;
-import com.example.mybestpractice.kotlin.BaseApplication;
 import com.example.mybestpractice.kotlin.Main2Activity;
 import com.example.mybestpractice.kotlin.Utils;
+import com.example.mybestpractice.kotlin.rxjava3.Rxjava3Activity;
 import com.example.mybestpractice.mvvm.MVVMActivity;
 import com.example.mybestpractice.optimize.OptimizeActivity;
 import com.example.mybestpractice.service.TestSertviceActivity;
 import com.example.mybestpractice.util.LaunchTimer;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Stack;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -94,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Message message = new Message();
+        message.what = 1;
+        handler.sendMessage(Message.obtain());
     }
 
     @Override
@@ -149,6 +132,12 @@ public class MainActivity extends AppCompatActivity {
         Utils.INSTANCE.toast("单参数");
         Utils.INSTANCE.toast("双参数", Toast.LENGTH_LONG);
 
+        HashMap<String, Integer> map = new HashMap<>();
+        Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
+        for (Map.Entry<String, Integer> entry : entrySet) {
+            System.out.println(entry.getKey() + "" + entry.getValue());
+
+        }
 
     }
 
@@ -160,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     public void service(View view) {
     }
 
-    @OnClick({R.id.aop, R.id.service, R.id.custom_view, R.id.kotlin, R.id.optimize, R.id.mvvm})
+    @OnClick({R.id.aop, R.id.service, R.id.custom_view, R.id.kotlin, R.id.optimize, R.id.mvvm, R.id.Rxjava3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aop:
@@ -180,6 +169,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.mvvm:
                 startActivity(new Intent(this, MVVMActivity.class));
+                break;
+            case R.id.Rxjava3:
+                // HencoderPlus 解析Rxjava3源码
+                startActivity(new Intent(this, Rxjava3Activity.class));
+
+//                HandlerThread handlerThread = new HandlerThread("handler-thread");
+//                handlerThread.start();
+//                Log.e("handlerThread", ":" + (handlerThread.getLooper() == Looper.getMainLooper()));
                 break;
             default:
         }
