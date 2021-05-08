@@ -1,7 +1,10 @@
 package com.example.mybestpractice.kotlin.rxjava3
 
+import android.graphics.Canvas
+import android.graphics.Path
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.annotation.IntegerRes
 import com.example.mybestpractice.R
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -56,15 +59,6 @@ class Rxjava3Activity : AppCompatActivity() {
             }
 
         })
-
-        var list = ArrayList<Int>()
-
-
-
-
-
-
-
 
     }
 }

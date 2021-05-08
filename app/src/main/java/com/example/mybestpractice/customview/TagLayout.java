@@ -3,6 +3,7 @@ package com.example.mybestpractice.customview;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -43,6 +44,7 @@ public class TagLayout extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Log.e("TagLayout -- ", "onMeasure");
 //        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         // 宽度已经用了多少
         int widthUsed = 0;
@@ -77,12 +79,16 @@ public class TagLayout extends ViewGroup {
             if (childBounds.size() <= i) {
                 // 如果该child还没有创建Rect，则新建
                 childBound = new Rect();
+                childBound.set(lineWidthUsed, heightUsed, lineWidthUsed + child.getMeasuredWidth(), heightUsed + child.getMeasuredHeight());
+                childBounds.add(childBound);
+
             } else {
                 childBound = childBounds.get(i);
+                childBound.set(lineWidthUsed, heightUsed, lineWidthUsed + child.getMeasuredWidth(), heightUsed + child.getMeasuredHeight());
+                childBounds.set(i, childBound);
             }
 
-            childBound.set(lineWidthUsed, heightUsed, lineWidthUsed + child.getMeasuredWidth(), heightUsed + child.getMeasuredHeight());
-            childBounds.add(childBound);
+
             // 更新本行使用的宽度
             lineWidthUsed += child.getMeasuredWidth();
             lineWidthUsed += HORIZONTAL_SPACE;
@@ -99,6 +105,8 @@ public class TagLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        Log.e("TagLayout -- ", "onLayout");
+
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             Rect childBound = childBounds.get(i);

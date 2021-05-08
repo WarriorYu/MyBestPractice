@@ -108,13 +108,16 @@ public class TagLayout2 extends ViewGroup {
             if (childBounds.size() <= i) {
                 // 如果该child还没有创建Rect，则新建
                 childBound = new Rect();
+                childBound.set(lineWidthUsed, heightUsed, lineWidthUsed + child.getMeasuredWidth(), heightUsed + child.getMeasuredHeight());
+                childBounds.add(childBound);
             } else {
                 childBound = childBounds.get(i);
+                childBound.set(lineWidthUsed, heightUsed, lineWidthUsed + child.getMeasuredWidth(), heightUsed + child.getMeasuredHeight());
+                childBounds.set(i, childBound);
             }
 
-            childBound.set(lineWidthUsed, heightUsed, lineWidthUsed + child.getMeasuredWidth(), heightUsed + child.getMeasuredHeight());
-
-            childBounds.add(childBound);
+//            childBound.set(lineWidthUsed, heightUsed, lineWidthUsed + child.getMeasuredWidth(), heightUsed + child.getMeasuredHeight());
+//            childBounds.add(childBound);
             // 更新本行使用的宽度
             lineWidthUsed += child.getMeasuredWidth();
             // 更新使用的最大宽度
