@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         Message message = new Message();
         message.what = 1;
         handler.sendMessage(Message.obtain());
+
     }
 
     @Override

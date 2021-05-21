@@ -10,6 +10,7 @@ import android.content.Context
  */
 class BaseApplication : Application() {
     companion object {
+        const val TOKEN = "" // 填入你申请到的令牌值
         @JvmStatic
         @get:JvmName("currentApplication")
         lateinit var currentApplication: Context
@@ -18,6 +19,6 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        currentApplication = this
+        currentApplication = applicationContext
     }
 }

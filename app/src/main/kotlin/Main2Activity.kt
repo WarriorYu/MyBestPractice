@@ -1,12 +1,15 @@
 package com.example.mybestpractice.kotlin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.mybestpractice.R
-import kotlinx.android.synthetic.main.activity_main2.*
+import com.example.mybestpractice.databinding.ActivityMain2Binding
+import com.example.mybestpractice.kotlin.sunnyweather.MvvmActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,38 +29,20 @@ class Main2Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
-        GlobalScope.launch(Dispatchers.Main) {
-            val data = getData()
-//            val processedData = processData(data)
-            // 练习内容：用协程让上面 ↑ 这两行放在后台执行，
-//            textview.text = processedData
-        }
+        val binding = ActivityMain2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        thread {
-            Thread.sleep(1000)
-
+        binding.textview.setOnClickListener {
+            startActivity(Intent(this,MvvmActivity::class.java))
         }
 
 //        BaseApplication.currentApplication;
         Utils.toast("单参数")
         Utils.toast("双参数", Toast.LENGTH_LONG)
 
-        val client = OkHttpClient()
-
-        val request: Request = Request.Builder().url("df").build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-            }
-        })
-
 
         // usage
-        val jane = User(lastName = "done")   // same as User(null, "Doe")
+       /* val jane = User(lastName = "done")   // same as User(null, "Doe")
         val john = User("John", "Doe")
 
         val retrofit = Retrofit.Builder()
@@ -75,7 +60,16 @@ class Main2Activity : AppCompatActivity() {
             override fun onResponse(call: retrofit2.Call<List<Repo>>, response: retrofit2.Response<List<Repo>>) {
                 Log.e("response", response.toString())
             }
-        })
+        })*/
+
+        /*val intArray: IntArray = intArrayOf(1, 3, 5)
+        val arrayOf: Array<String> = arrayOf("我", "最", "码农")
+        val array: Array<User> = arrayOf(User(lastName = "ds"), User(lastName = "dd"))
+        arrayOf.size*/
+
+
+
+
 
 
     }
@@ -89,7 +83,7 @@ class Main2Activity : AppCompatActivity() {
     }
 
     // 耗时函数 2
-    /* private suspend fun processData(data: String): String {
+     /*private suspend fun processData(data: String): String {
          // 假设这个函数也比较耗时，需要放在后台
          return withContext(Dispatchers.IO) {
              data.split("_") // 把 "hen_coder" 拆成 ["hen", "coder"]
@@ -98,5 +92,6 @@ class Main2Activity : AppCompatActivity() {
          }
 
      }*/
+
 
 }

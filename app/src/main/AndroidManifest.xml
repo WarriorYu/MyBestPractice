@@ -6,19 +6,20 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name=".kotlin.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".kotlin.rxjava3.Rxjava3Activity"></activity>
+        <activity android:name=".kotlin.sunnyweather.ui.WeatherActivity"></activity>
+        <activity android:name=".kotlin.sunnyweather.MvvmActivity" />
+        <activity android:name=".kotlin.rxjava3.Rxjava3Activity" />
         <activity android:name=".customview.ScrollerActivity" />
         <activity android:name=".mvvm.MVVMActivity" />
         <activity android:name=".optimize.ImageHookActivity" />
         <activity android:name=".optimize.OptimizeActivity" />
-        <activity android:name=".kotlin.Main2Activity" />
         <activity android:name=".customview.FlowlayoutActivity" />
         <activity android:name=".customview.CircleViewActivity" />
         <activity android:name=".customview.SquareImgActivity" />
@@ -33,7 +34,7 @@
 
         <activity android:name=".aop.OtherActivity" />
         <activity android:name=".aop.LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".kotlin.Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
