@@ -9,10 +9,22 @@ import retrofit2.http.Path
 
 interface WeatherService {
 
+    /**
+     * Call的写法
+     */
     @GET("v2.5/${BaseApplication.TOKEN}/{lng},{lat}/realtime.json")
     fun getRealtimeWeather(@Path("lng") lng: String, @Path("lat") lat: String): Call<RealtimeResponse>
 
     @GET("v2.5/${BaseApplication.TOKEN}/{lng},{lat}/daily.json")
     fun getDailyWeather(@Path("lng") lng: String, @Path("lat") lat: String): Call<DailyResponse>
+
+    /**
+     * 使用suspend,不使用Call
+     */
+//    @GET("v2.5/${BaseApplication.TOKEN}/{lng},{lat}/realtime.json")
+//    suspend fun getRealtimeWeather(@Path("lng") lng: String, @Path("lat") lat: String): RealtimeResponse
+//
+//    @GET("v2.5/${BaseApplication.TOKEN}/{lng},{lat}/daily.json")
+//    suspend fun getDailyWeather(@Path("lng") lng: String, @Path("lat") lat: String): DailyResponse
 
 }

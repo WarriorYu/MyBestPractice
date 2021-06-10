@@ -17,8 +17,28 @@ import kotlin.math.ln
  * Describe :
  */
 object Repository {
+
+   /* fun searchPlaces(query: String) = fire(Dispatchers.IO) {
+        val placeResponse = SunnyWeatherNetWork.searchPlaces(query)
+        if (placeResponse.status == "ok") {
+            val places = placeResponse.places
+            Result.success(places)
+        } else {
+            Result.failure(RuntimeException("response status is ${placeResponse.status}"))
+        }
+    }*/
+
+    private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) = liveData<Result<T>>(context) {
+        val result = try {
+            block()
+        } catch (e: Exception) {
+            Result.failure<T>(e)
+        }
+        emit(result)
+    }
+
     // 使用fire改造之前的写法
-    /*fun searchPlaces(query: String) = liveData<Result<List<Place>>>(Dispatchers.IO) {
+    fun searchPlaces(query: String) = liveData<Result<List<Place>>>(Dispatchers.IO) {
         val result = try {
             val placeResponse = SunnyWeatherNetWork.searchPlaces(query)
             if (placeResponse.status == "ok") {
@@ -31,16 +51,9 @@ object Repository {
             Result.failure(e)
         }
         emit(result)
-    }*/
-    fun searchPlaces(query: String) = fire(Dispatchers.IO) {
-        val placeResponse = SunnyWeatherNetWork.searchPlaces(query)
-        if (placeResponse.status == "ok") {
-            val places = placeResponse.places
-            Result.success(places)
-        } else {
-            Result.failure(RuntimeException("response status is ${placeResponse.status}"))
-        }
     }
+
+
 
     /*fun refreshWeather(lng: String, lat: String) = liveData(Dispatchers.IO) {
         val result = try {
@@ -91,15 +104,6 @@ object Repository {
         }
     }
 
-    private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) = liveData<Result<T>>(context) {
-        val result = try {
-            block()
-        } catch (e: Exception) {
-            Result.failure<T>(e)
-        }
-        emit(result)
-
-    }
 
 
     fun savePlace(place: Place) = PlaceDao.savePlace(place)
@@ -107,6 +111,8 @@ object Repository {
     fun getSavedPlace() = PlaceDao.getSavedPlace()
 
     fun isPlaceSaved() = PlaceDao.isPlaceSaved()
+
+
 
 
 }

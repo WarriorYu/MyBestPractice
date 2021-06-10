@@ -2,6 +2,7 @@ package com.example.mybestpractice.kotlin
 
 import android.app.Application
 import android.content.Context
+import com.example.mybestpractice.kotlin.mooc.ActivityManager
 
 /**
  * @author   :   yuxibing
@@ -20,5 +21,6 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         currentApplication = applicationContext
+        ActivityManager.instance.init(this)
     }
 }

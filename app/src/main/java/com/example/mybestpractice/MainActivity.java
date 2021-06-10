@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     @BindView(R.id.aop)
-    Button btn;
+    Button aop;
 
 //    @Override
 //    protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Log.e(TAG, "onCreate");
+
       /*  btn.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -94,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });*/
-        btn.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
+        /*btn.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
             @Override
             public void onDraw() {
                 LaunchTimer.endRecord("addOnDrawListener");
             }
-        });
+        });*/
 
 
        /* OkHttpClient client = new OkHttpClient.Builder().readTimeout(10, TimeUnit.SECONDS).build();
@@ -130,24 +131,15 @@ public class MainActivity extends AppCompatActivity {
 
 //        BaseApplication.currentApplication();
 
-        Utils.INSTANCE.toast("单参数");
-        Utils.INSTANCE.toast("双参数", Toast.LENGTH_LONG);
+//        Utils.INSTANCE.toast("单参数");
+//        Utils.INSTANCE.toast("双参数", Toast.LENGTH_LONG);
 
-        HashMap<String, Integer> map = new HashMap<>();
-        Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
-        for (Map.Entry<String, Integer> entry : entrySet) {
-            System.out.println(entry.getKey() + "" + entry.getValue());
-
-        }
 
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return super.dispatchTouchEvent(ev);
-    }
-
-    public void service(View view) {
     }
 
     @OnClick({R.id.aop, R.id.service, R.id.custom_view, R.id.kotlin, R.id.optimize, R.id.mvvm, R.id.Rxjava3})

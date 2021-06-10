@@ -20,14 +20,12 @@
         android:id="@+id/custom_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="service"
         android:text="Custom View Demo" />
 
     <Button
         android:id="@+id/kotlin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="service"
         android:text="Kotlin Demo" />
 
 
@@ -35,14 +33,12 @@
         android:id="@+id/optimize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="service"
         android:text="Optimize Demo" />
 
     <Button
         android:id="@+id/mvvm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="service"
         android:text="MVVM Demo" />
 
     <Button

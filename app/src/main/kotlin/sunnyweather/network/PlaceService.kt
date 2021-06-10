@@ -13,6 +13,20 @@ import retrofit2.http.Query
  */
 interface PlaceService {
 
+    /**
+     * Call的写法
+     */
     @GET("v2/place?token=${BaseApplication.TOKEN}&lang=zh_CN")
     fun searchPlace(@Query("query") query: String): Call<PlaceResponse>
+
+    /**
+     * 使用suspend,不使用Call
+     */
+
+//    @GET("v2/place?token=${BaseApplication.TOKEN}&lang=zh_CN")
+//    suspend fun searchPlace(@Query("query") query: String): PlaceResponse
+//
+//
+//    @GET("v2/place?token=${BaseApplication.TOKEN}&lang=zh_CN")
+//    suspend fun searchPlaceTwo(@Query("query") query: String): PlaceResponse
 }

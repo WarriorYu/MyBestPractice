@@ -15,16 +15,32 @@ import kotlin.coroutines.suspendCoroutine
 object SunnyWeatherNetWork {
     private val placeService = ServiceCreator.create<PlaceService>()
 
-    suspend fun searchPlaces(query: String) = placeService.searchPlace(query).await()
-
     private val weatherService = ServiceCreator.create(WeatherService::class.java)
+
+
+    /**
+     * Retrofit使用suspend的写法
+     */
+//    suspend fun searchPlaces(query: String) = placeService.searchPlace(query)
+//
+//    suspend fun getDailyWeather(lng: String, lat: String) = weatherService.getDailyWeather(lng, lat)
+//
+//    suspend fun getRealtimeWeather(lng: String, lat: String) = weatherService.getRealtimeWeather(lng, lat)
+
+    suspend fun searchPlacesTwo(query: String) = placeService.searchPlace(query)
+
+
+
+    /**
+     * Retrofit 使用Call的写法
+     */
+    suspend fun searchPlaces(query: String) = placeService.searchPlace(query).await()
 
     suspend fun getDailyWeather(lng: String, lat: String) = weatherService.getDailyWeather(lng, lat).await()
 
     suspend fun getRealtimeWeather(lng: String, lat: String) = weatherService.getRealtimeWeather(lng, lat).await()
 
-
-    private suspend fun <T> Call<T>.await(): T {
+     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
@@ -42,6 +58,10 @@ object SunnyWeatherNetWork {
             })
         }
     }
+
+
+
+
 
 
 }

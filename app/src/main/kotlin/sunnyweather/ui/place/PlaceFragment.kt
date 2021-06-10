@@ -25,6 +25,7 @@ import com.example.mybestpractice.kotlin.sunnyweather.ui.WeatherActivity
 class PlaceFragment : Fragment() {
 
     val viewModel by viewModels<PlaceViewModel>()
+
     private lateinit var adapter: PlaceAdapter
     private lateinit var binding: FragmentPlaceBinding
 
