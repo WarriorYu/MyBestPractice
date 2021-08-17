@@ -18,11 +18,7 @@ import com.example.mybestpractice.customview.util.DrawableUtil;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class FlowlayoutActivity extends AppCompatActivity {
-    @BindView(R.id.taglayout)
     TagLayout taglayout;
     private int vPadding;
     private int hPadding;
@@ -31,7 +27,7 @@ public class FlowlayoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flow_layout);
-        ButterKnife.bind(this);
+        taglayout = findViewById(R.id.taglayout);
         vPadding = CommonUtil.getDimens(R.dimen.dp6);
         hPadding = CommonUtil.getDimens(R.dimen.dp9);
         ArrayList<String> list = new ArrayList<>();

@@ -2,7 +2,7 @@ package com.example.mybestpractice.kotlin
 
 import android.app.Application
 import android.content.Context
-import com.example.mybestpractice.kotlin.mooc.ActivityManager
+import com.yu.common.ActivityManager
 
 /**
  * @author   :   yuxibing

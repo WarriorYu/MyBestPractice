@@ -7,9 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mybestpractice.R;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.yu.common.executor.HiExecutor;
 
 /**
  * @author : yuxibing
@@ -18,30 +16,36 @@ import butterknife.OnClick;
  */
 public class CustomViewActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_view);
-        ButterKnife.bind(this);
+        findViewById(R.id.square_img).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CustomViewActivity.this, SquareImgActivity.class));
+            }
+        });
+        findViewById(R.id.cirecle_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CustomViewActivity.this, CircleViewActivity.class));
 
-    }
+            }
+        });
+        findViewById(R.id.flowlayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CustomViewActivity.this, FlowlayoutActivity.class));
+            }
+        });
+        findViewById(R.id.scroller).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CustomViewActivity.this, ScrollerActivity.class));
+            }
+        });
 
-    @OnClick({R.id.square_img, R.id.cirecle_view, R.id.flowlayout,R.id.scroller})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.square_img:
-                startActivity(new Intent(this, SquareImgActivity.class));
-                break;
-            case R.id.cirecle_view:
-                startActivity(new Intent(this, CircleViewActivity.class));
-                break;
-            case R.id.flowlayout:
-                startActivity(new Intent(this, FlowlayoutActivity.class));
-                break;
-            case R.id.scroller:
-                startActivity(new Intent(this, ScrollerActivity.class));
-                break;
-        }
+
     }
 }

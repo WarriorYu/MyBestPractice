@@ -19,6 +19,7 @@ import com.example.mybestpractice.optimize.ImageHook;
 import com.example.mybestpractice.util.LaunchTimer;
 import com.taobao.android.dexposed.DexposedBridge;
 import com.taobao.android.dexposed.XC_MethodHook;
+import com.yu.common.CrashHandler;
 
 import leakcanary.LeakCanary;
 
@@ -34,6 +35,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //异常信息收集到手机文件
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext());
 //        Debug.startMethodTracing("testTraceview");
 //        TraceCompat.beginSection("testSystrace");
         context = this;

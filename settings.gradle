@@ -4,3 +4,4 @@ rootProject.name='MyBestPractice'
 if (hasProperty('isLoadTest') ? isLoadTest.toBoolean() : false) {
     include(':Test')
 }
+include ':common'

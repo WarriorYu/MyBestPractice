@@ -4,16 +4,17 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--    android:name=".MyApplication"-->
+
     <application
-        android:name=".kotlin.BaseApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".kotlin.mycoroutineretrofit.GFActivity"></activity>
+        <activity android:name=".mooctixi.ExecutorActivity"></activity>
+        <activity android:name=".kotlin.mycoroutineretrofit.GFActivity" />
         <activity android:name=".kotlin.mycoroutineretrofit.base.BaseVmActivity" />
         <activity android:name=".kotlin.sunnyweather.ui.WeatherActivity" />
         <activity android:name=".kotlin.sunnyweather.MvvmActivity" />
@@ -36,8 +37,17 @@
 
         <activity android:name=".aop.OtherActivity" />
         <activity android:name=".aop.LoginActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".kotlin.Main2Activity">
+        <activity android:name=".kotlin.Main2Activity" />
+        <!--
+ <activity android:name=".kotlin.Main2Activity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+        -->
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

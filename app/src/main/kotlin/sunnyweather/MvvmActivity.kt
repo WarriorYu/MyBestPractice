@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import com.example.mybestpractice.R
 import com.example.mybestpractice.kotlin.CoroutineRetrofit.BannerViewModel
 import com.example.mybestpractice.kotlin.Utils
-import com.example.mybestpractice.kotlin.mooc.ActivityManager
+import com.yu.common.ActivityManager
 
 class MvvmActivity : AppCompatActivity() {
     private val viewModel:BannerViewModel by viewModels()

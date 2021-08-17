@@ -1,22 +1,20 @@
 package com.example.mybestpractice.kotlin
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import com.example.mybestpractice.R
+import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.FileUtils
 import com.example.mybestpractice.databinding.ActivityMain2Binding
-import com.example.mybestpractice.kotlin.mooc.ActivityManager
+import com.yu.common.ActivityManager
 import com.example.mybestpractice.kotlin.mycoroutineretrofit.GFActivity
 import com.example.mybestpractice.kotlin.sunnyweather.MvvmActivity
+import com.liulishuo.filedownloader.BaseDownloadTask
+import com.liulishuo.filedownloader.FileDownloadListener
+import com.liulishuo.filedownloader.FileDownloader
 import kotlinx.coroutines.*
-import okhttp3.*
-import java.io.IOException
-import kotlin.concurrent.thread
-import retrofit2.Retrofit
+import java.io.File
 
 
 class Main2Activity : AppCompatActivity() {
@@ -28,6 +26,7 @@ class Main2Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -39,11 +38,15 @@ class Main2Activity : AppCompatActivity() {
             startActivity(Intent(this, GFActivity::class.java))
         }
 
+        binding.textview3.setOnClickListener {
+            // 文件下载
+            FileDownloader.setup(applicationContext)
+            download()
+        }
+
 //        BaseApplication.currentApplication;
         Utils.toast("单参数")
         Utils.toast("双参数", Toast.LENGTH_LONG)
-
-
 
 
         // usage
@@ -74,7 +77,7 @@ class Main2Activity : AppCompatActivity() {
 
         val job = Job()
         val scope = CoroutineScope(job)
-        scope.launch {  }
+        scope.launch { }
         job.cancel()
 
         runBlocking {
@@ -86,12 +89,73 @@ class Main2Activity : AppCompatActivity() {
         }
 
         //测试Activity管理栈
-        ActivityManager.instance.addFrontBackCallback(object:ActivityManager.FrontBackCallback{
+        ActivityManager.instance.addFrontBackCallback(object : ActivityManager.FrontBackCallback {
             override fun onChanged(front: Boolean) {
                 Utils.toast("当前处于${front}")
             }
         })
 
+
+    }
+
+    private fun download() {
+        val urls = ArrayList<String>()
+        urls.add("http://img.guanfu.cn/gf-brand_edit-1623823891348-774.jpg")
+        urls.add("http://img.guanfu.cn/gf-pro_banner-1558510482398-288.jpg")
+
+
+        val adImgFileDir = File(externalCacheDir, "adImgs")
+        FileUtils.createOrExistsDir(adImgFileDir)
+
+        val imgPaths = ArrayList<File>()
+        val img1File = File(adImgFileDir, "img1")
+        val img2File = File(adImgFileDir, "img2")
+        imgPaths.add(img1File)
+        imgPaths.add(img2File)
+
+
+        val queueTarget: FileDownloadListener = object : FileDownloadListener() {
+            override fun pending(task: BaseDownloadTask, soFarBytes: Int, totalBytes: Int) {}
+            override fun connected(
+                task: BaseDownloadTask,
+                etag: String,
+                isContinue: Boolean,
+                soFarBytes: Int,
+                totalBytes: Int
+            ) {
+            }
+
+            override fun progress(task: BaseDownloadTask, soFarBytes: Int, totalBytes: Int) {}
+            override fun blockComplete(task: BaseDownloadTask) {}
+            override fun retry(
+                task: BaseDownloadTask,
+                ex: Throwable,
+                retryingTimes: Int,
+                soFarBytes: Int
+            ) {
+            }
+
+            override fun completed(task: BaseDownloadTask) {
+                val path = task.path
+                Log.e("imgPath",path)
+            }
+            override fun paused(task: BaseDownloadTask, soFarBytes: Int, totalBytes: Int) {}
+            override fun error(task: BaseDownloadTask, e: Throwable) {}
+            override fun warn(task: BaseDownloadTask) {}
+        }
+
+
+        for ((index,url) in urls.withIndex()){
+            FileDownloader.getImpl().create(url)
+//                .setPath(imgPaths[index].absolutePath)
+                .setPath(adImgFileDir.absolutePath,true)
+                .setCallbackProgressTimes(0) // 由于是队列任务, 这里是我们假设了现在不需要每个任务都回调`FileDownloadListener#progress`, 我们只关系每个任务是否完成, 所以这里这样设置可以很有效的减少ipc.
+                .setListener(queueTarget)
+                .asInQueueTask()
+                .enqueue();
+        }
+
+        FileDownloader.getImpl().start(queueTarget, false);
     }
 
     // 耗时函数 1

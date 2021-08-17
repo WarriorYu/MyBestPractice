@@ -104,9 +104,6 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-
     //utils工具集合
     implementation 'com.blankj:utilcodex:1.28.4'
 
@@ -121,6 +118,9 @@ dependencies {
 
     // 异步启动器
     implementation project(path: ':launchstarter')
+
+    // 公共库
+    implementation project(path: ':common')
 
 //    compileOnly 'me.ele:lancet-base:1.0.6'
 
@@ -141,12 +141,17 @@ dependencies {
     // 支持viewmodels
     implementation "androidx.fragment:fragment-ktx:1.3.0"
 
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.2.1'
 
 
     // Rxjava3
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
+    // 文件下载
+    implementation 'com.liulishuo.filedownloader:library:1.7.7'
 
 }
 

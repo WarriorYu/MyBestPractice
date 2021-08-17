@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Process;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -16,16 +17,9 @@ import com.blankj.utilcode.util.ThreadUtils;
 import com.example.mybestpractice.R;
 import com.example.mybestpractice.optimize.async.ThreadPoolUtil;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class OptimizeActivity extends AppCompatActivity implements ICallBack {
-    @BindView(R.id.img)
     ImageView img;
-    @BindView(R.id.test_imghook)
     ImageView testImgHook;
-    @BindView(R.id.btn_thread)
     Button btnThread;
 
     private static final String TAG = OptimizeActivity.class.getSimpleName();
@@ -44,6 +38,9 @@ public class OptimizeActivity extends AppCompatActivity implements ICallBack {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        img = findViewById(R.id.img);
+        testImgHook = findViewById(R.id.test_imghook);
+        btnThread = findViewById(R.id.btn_thread);
         /*new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -104,8 +101,6 @@ public class OptimizeActivity extends AppCompatActivity implements ICallBack {
 
         //通过AsyncLayoutInflater异步加载布局时，需要注释setContentView
         setContentView(R.layout.activity_optimize);
-        ButterKnife.bind(this);
-
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test);
         img.setImageBitmap(bitmap);
@@ -157,8 +152,7 @@ public class OptimizeActivity extends AppCompatActivity implements ICallBack {
         CallBackManager.removeCallBack(this);
     }
 
-    @OnClick(R.id.btn_thread)
-    public void onViewClicked() {
+    public void threadOnclick(View view) {
         ThreadPoolUtil.getService().execute(new Runnable() {
             @Override
             public void run() {

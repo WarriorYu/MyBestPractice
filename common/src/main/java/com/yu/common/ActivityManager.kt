@@ -1,4 +1,4 @@
-package com.example.mybestpractice.kotlin.mooc
+package com.yu.common
 
 import android.app.Activity
 import android.app.Application
@@ -83,13 +83,14 @@ class ActivityManager private constructor() {
         }
     }
 
-    val topActivity:Activity?get() {
-        if (activityRefs.size<=0){
-            return null
-        }else{
-            return activityRefs[activityRefs.size-1].get()
+    val topActivity: Activity?
+        get() {
+            if (activityRefs.size <= 0) {
+                return null
+            } else {
+                return activityRefs[activityRefs.size - 1].get()
+            }
         }
-    }
 
 
     companion object {
